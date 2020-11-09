@@ -1,10 +1,12 @@
 package com.hana.delivery.db.model;
 
-import java.time.LocalDateTime;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -21,28 +23,22 @@ public class BouquetGarni {
 	@Column(name="id")
 	private Integer id;
 	
-	@Column(name="name", nullable=false)
 	@NotBlank
+	@Column(name="name", nullable=false)
 	private String name;
 	
-	@Column(name="quality", columnDefinition="DEFAULT 0")
-	@Min(0)
-	private int quality;
+	@Min(0) 
+	@Column(name="quality")
+	private int quality = 0;
 	
+	@Min(0) 
 	@Column(name="cost_per_unit")
-	@Min(0)
-	private double cost;
+	private double cost = 0;
 	
-	@Column(name="garni_type", nullable=false, columnDefinition="DEFAULT 'flower'")
-	private String garniType;
+	@Column(name="garni_type")
+	private String garniType = "flower";
 	
-	@Column(name="created_at", columnDefinition="TIMESTAMP")
-	private LocalDateTime createdAt;
-	
-	@Column(name="updated_at", columnDefinition="TIMESTAMP")
-	private LocalDateTime updatedAt;
-	
-	@Column(name="deleted_at", columnDefinition="TIMESTAMP")
-	private LocalDateTime deletedAt;
+	@OneToMany(mappedBy="bouquetGarni")
+	private Set<BouquetComponent> component;
 	
 }

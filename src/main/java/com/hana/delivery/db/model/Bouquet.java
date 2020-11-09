@@ -1,12 +1,14 @@
 package com.hana.delivery.db.model;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 
 import lombok.Data;
 
@@ -20,17 +22,26 @@ public class Bouquet {
 	@Column(name="id")
 	private Integer id;
 	
+	@Column(name="name", nullable=false)
 	private String name;
 	
-	private double cost;
+	@Column(name="cost", nullable=false)
+	@Min(0)
+	private double cost = 0;
 	
-	private double price;
+	@Column(name="price", nullable=false)
+	@Min(0)
+	private double price = 0;
 	
-	private Integer quality;
+	@Column(name="remain", nullable=false)
+	@Min(0)
+	private Integer remain = 0;
 	
-	private Integer stock;
+	@Column(name="stock", nullable=false)
+	@Min(0)
+	private Integer stock = 0;
 	
-	private List<BouquetComponent> flowers;
+	@OneToMany(mappedBy="bouquet")
+	private Set<BouquetComponent> component;
 	
-	private List<BouquetComponent> accessory;
 }

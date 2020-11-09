@@ -31,11 +31,11 @@ public class BouquetComponent {
 	private BouquetGarni bouquetGarni;
 	
 	@Column(name="quality") @ColumnDefault("0")
-	private double quality;
+	private double quality = 0;
 
 	@Column(name="cost") @ColumnDefault("0")
-	private double cost;
+	private double cost = 0;
 	
-	@Column(name="remark") @ColumnDefault("0")
+	@Column(name="remark")
 	private String remark;
 }

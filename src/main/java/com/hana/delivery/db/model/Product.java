@@ -13,20 +13,20 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Data
-@Entity
-@Table(name="product")
+//@Entity
+//@Table(name="product")
 public class Product {
-
-	@Id
-	@GeneratedValue(strategy=javax.persistence.GenerationType.AUTO)
-	private Integer id;
-	
-	@Column(name="name", nullable=false)
-	private String name;
-	
-	@Column(name="product_description", nullable=false)
-	private String description;
-	
-	@Column(name="product_margin", nullable=false)
-	private double margin = 1;
+//
+//	@Id
+//	@GeneratedValue(strategy=javax.persistence.GenerationType.AUTO)
+//	private Integer id;
+//	
+//	@Column(name="name", nullable=false)
+//	private String name;
+//	
+//	@Column(name="product_description", nullable=false)
+//	private String description;
+//	
+//	@Column(name="product_margin", nullable=false)
+//	private double margin = 1;
 }

@@ -1,5 +1,6 @@
 package com.hana.delivery.db.model;
 
+import java.math.BigInteger;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -12,7 +13,7 @@ import javax.validation.constraints.Min;
 
 import lombok.Data;
 
-@Data
+//@Data
 @Entity
 @Table(name="bouquet")
 public class Bouquet {
@@ -20,7 +21,7 @@ public class Bouquet {
 	@Id
 	@GeneratedValue(strategy=javax.persistence.GenerationType.AUTO)
 	@Column(name="id")
-	private Integer id;
+	private BigInteger id;
 	
 	@Column(name="name", nullable=false)
 	private String name;
@@ -40,11 +41,11 @@ public class Bouquet {
 	@Column(name="stock", nullable=false)
 	@Min(0)
 	private Integer stock = 0;
-	
-	@OneToMany(mappedBy="bouquet")
-	private Set<BouquetComponent> component;
-	
-	@OneToMany(mappedBy="bouquet")
-	private Set<BouquetProduct> products;
+
+//	@OneToMany(mappedBy="bouquet")
+//	private Set<BouquetComponent> component;
+//	
+//	@OneToMany(mappedBy="bouquet")
+//	private Set<BouquetProduct> products;
 	
 }

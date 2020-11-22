@@ -13,32 +13,32 @@ import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 
-@Data
-@Entity
-@Table(name="bouquet_garni")
+//@Data
+//@Entity
+//@Table(name="bouquet_garni")
 public class BouquetGarni {
 	
-	@Id 
-	@GeneratedValue(strategy=javax.persistence.GenerationType.AUTO)
-	@Column(name="id")
-	private Integer id;
-	
-	@NotBlank
-	@Column(name="name", nullable=false)
-	private String name;
+//	@Id 
+//	@GeneratedValue(strategy=javax.persistence.GenerationType.AUTO)
+//	@Column(name="id")
+//	private Integer id;
+//	
+//	@NotBlank
+//	@Column(name="name", nullable=false)
+//	private String name;
 	
 	@Min(0) 
 	@Column(name="quality")
 	private int quality = 0;
 	
-	@Min(0) 
-	@Column(name="cost_per_unit")
-	private double cost = 0;
-	
-	@Column(name="garni_type")
-	private String garniType = "flower";
-	
-	@OneToMany(mappedBy="bouquetGarni")
-	private Set<BouquetComponent> component;
+//	@Min(0) 
+//	@Column(name="cost_per_unit")
+//	private double cost = 0;
+//	
+//	@Column(name="garni_type")
+//	private String garniType = "flower";
+//	
+//	@OneToMany(mappedBy="bouquetGarni")
+//	private Set<BouquetComponent> component;
 	
 }

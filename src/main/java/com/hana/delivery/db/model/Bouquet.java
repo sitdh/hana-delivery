@@ -44,4 +44,7 @@ public class Bouquet {
 	@OneToMany(mappedBy="bouquet")
 	private Set<BouquetComponent> component;
 	
+	@OneToMany(mappedBy="bouquet")
+	private Set<BouquetProduct> products;
+	
 }

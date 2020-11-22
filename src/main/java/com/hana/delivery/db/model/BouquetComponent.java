@@ -10,6 +10,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.hana.delivery.db.model.composite.BouquetComponentKey;
+
 import lombok.Data;
 
 @Data

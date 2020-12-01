@@ -13,7 +13,7 @@ import javax.validation.constraints.Min;
 
 import lombok.Data;
 
-//@Data
+@Data
 @Entity
 @Table(name="bouquet")
 public class Bouquet {
@@ -42,10 +42,6 @@ public class Bouquet {
 	@Min(0)
 	private Integer stock = 0;
 
-//	@OneToMany(mappedBy="bouquet")
-//	private Set<BouquetComponent> component;
-//	
-//	@OneToMany(mappedBy="bouquet")
-//	private Set<BouquetProduct> products;
-	
+	@OneToMany(mappedBy="bouquet")
+	private Set<BouquetComponent> component;
 }

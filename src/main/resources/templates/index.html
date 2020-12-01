@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head th:insert="~{layouts/header :: define_header_style}">
+  </head>
+  <body>
+    <header th:insert="~{layouts/header :: define_header_navigation_bar}"></header>
+    
+    <div th:insert="~{layouts/footer :: copy}"></div>
+    
+    <div style="display: none;" th:replace="~{layouts/header :: define_header_script}"></div>
+  </body>
+</html>

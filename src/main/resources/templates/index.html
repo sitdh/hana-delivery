@@ -4,8 +4,11 @@
   </head>
   <body>
     <header th:insert="~{layouts/header :: define_header_navigation_bar}"></header>
+
+    <main>
+    </main>
     
-    <div th:insert="~{layouts/footer :: copy}"></div>
+    <div th:insert="~{layouts/footer :: footer_content_menu}"></div>
     
     <div style="display: none;" th:replace="~{layouts/header :: define_header_script}"></div>
   </body>

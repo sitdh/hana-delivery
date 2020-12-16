@@ -1,12 +1,13 @@
 package com.hana.delivery.db.model;
 
 import java.math.BigInteger;
-import java.util.Set;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
@@ -14,34 +15,26 @@ import javax.validation.constraints.Min;
 import lombok.Data;
 
 @Data
-@Entity
-@Table(name="bouquet")
+@Table
+@Entity(name = "bouquet")
 public class Bouquet {
 
-	@Id
-	@GeneratedValue(strategy=javax.persistence.GenerationType.AUTO)
-	@Column(name="id")
-	private BigInteger id;
-	
-	@Column(name="name", nullable=false)
-	private String name;
-	
-	@Column(name="cost", nullable=false)
-	@Min(0)
-	private double cost = 0;
-	
-	@Column(name="price", nullable=false)
-	@Min(0)
-	private double price = 0;
-	
-	@Column(name="remain", nullable=false)
-	@Min(0)
-	private Integer remain = 0;
-	
-	@Column(name="stock", nullable=false)
-	@Min(0)
-	private Integer stock = 0;
+  @Id
+  @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
+  private BigInteger id;
 
-	@OneToMany(mappedBy="bouquet")
-	private Set<BouquetComponent> component;
+  @Column(name = "name", length = 100, nullable = false)
+  private String name;
+
+  @Column(name = "cost", precision = 5, scale = 2) 
+  @Min(0)
+  private double cost = 0;
+
+  @Column(name = "image_location", length = 200, nullable = false)
+  private String imageLocation;
+
+  @OneToMany
+	@JoinColumn(name = "bouquet_id", referencedColumnName = "id")
+  private Collection<ArtifactComponent> artifactComponents;
+
 }

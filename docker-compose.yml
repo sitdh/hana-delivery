@@ -1,0 +1,10 @@
+version: '3.4'
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: hana
+      POSTGRES_USER: hana
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5432:5432

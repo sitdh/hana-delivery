@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head th:insert="~{layouts/header :: define_header_style}">
+</head>
+<body>
+	<header th:insert="~{layouts/header :: define_header_navigation_bar}"></header>
+
+	<main role="main">
+		<section class="jumbotron text-center" style="display: none;">
+			<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+				<div class="carousel-inner" th:each="product : ${highlightProducts}">
+					<div class="carousel-item">
+					  <img 
+						  th:src="'http://localhost:9999/unsafe/714x357/' + ${product.bouquet.imageLocation}"
+						  th:alt="${product.productName}">
+					  <div class="carousel-caption d-none d-md-block">
+						<h5 th:text="${product.productName}"></h5>
+						<p th:text="${#strings.abbreviate(product.description, 100)}">...</p>
+					  </div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<div class="album py-5 bg-light">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4" th:each="product : ${products}">
+						<div class="card mb-4 shadow-sm">
+							<img class="card-img-top" 
+								th:src="'http://localhost:9999/unsafe/348x225/' + ${product.bouquet.imageLocation}" 
+								th:alt="${product.productName}" />
+							<div class="card-body">
+								<h5 class="card-title" th:text="${#strings.abbreviate(product.productName, 30)}">Card title</h5>
+								<p class="card-text"
+									th:text="${#strings.abbreviate(product.description, 200)}">This is a wider card with supporting
+									text below as a natural lead-in to additional content. This
+									content is a little bit longer.</p>
+								<div class="d-flex justify-content-between align-items-center">
+									<div class="btn-group">
+										<form action="/api/cart" method="POST">
+											<input type="hidden" th:value="${product.id}" th:name="id" />
+											<button type="submit" class="btn btn-sm btn-outline-secondary">ซื้อ</button>
+										</form>
+										<!--
+										<button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+										-->
+									</div>
+									<small class="text-muted" th:text="${#numbers.formatDecimal(product.price, 1, 'DEFAULT', 2, 'DEFAULT')} + ' บาท'"></small>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</main>
+
+	<div th:insert="~{layouts/footer :: footer_content_menu}"></div>
+
+	<div style="display: none;"
+		th:replace="~{layouts/header :: define_header_script}"></div>
+</body>
+</html>

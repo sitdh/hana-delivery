@@ -1,7 +1,7 @@
 package com.hana.delivery.db.model;
 
 import java.math.BigInteger;
-import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Basic;
@@ -9,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,6 +27,11 @@ import lombok.Data;
 @Entity(name = "product_order")
 public class ProductOrder implements PreUpdateEventListener, PreInsertEventListener {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 7332285558615842772L;
+
   @Id
   @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
   private BigInteger id;
@@ -39,7 +46,13 @@ public class ProductOrder implements PreUpdateEventListener, PreInsertEventListe
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
 
+  @OneToMany
+  @JoinColumn(name = "product_order_id", referencedColumnName = "id")
+  private Collection<ProductOrderLine> productOrderLine;
+
   @Column(name = "cart_price", nullable = false, updatable = false, precision = 10, scale = 2)
+  protected double cartPrice = 0;
+
   public double getCartPrice()
   {
     return 0;
@@ -47,7 +60,9 @@ public class ProductOrder implements PreUpdateEventListener, PreInsertEventListe
 
   public boolean onPreInsert(PreInsertEvent event)
   {
-
+	this.createdAt = new Date();
+	this.updatedAt = new Date();
+	
     return true;
   }
   

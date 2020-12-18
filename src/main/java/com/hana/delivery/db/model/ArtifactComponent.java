@@ -10,9 +10,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 
+import lombok.Builder;
 import lombok.Data;
 
-@Data
+@Data @Builder
 @Table
 @Entity(name = "artifact_component")
 public class ArtifactComponent {
@@ -22,18 +23,24 @@ public class ArtifactComponent {
   @Column(name = "id")
   private BigInteger id;
 
-  @Column(name = "number")
-  @Min(0)
-  private int number = 0;
+  @Column(name = "quality")
+  @Min(1)
+  @Builder.Default private int quality = 1;
 
-  @Column(name = "cost")
+  @Column(name = "cost", updatable = false, precision = 10, scale = 2)
   @Min(0)
-  private float cost = 0;
+  @Builder.Default private double cost = 0;
 
   @ManyToOne
   private Artifact artifact;
 
   @ManyToOne
   private Bouquet bouquet;
+
+  public double getCost()
+  {
+    return this.getArtifact().getUnitCost() 
+    		* this.getQuality();
+  }
 
 } 

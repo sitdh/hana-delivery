@@ -12,9 +12,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 
+import lombok.Builder;
 import lombok.Data;
 
-@Data
+@Data @Builder
 @Table
 @Entity(name = "bouquet")
 public class Bouquet {
@@ -28,7 +29,7 @@ public class Bouquet {
 
   @Column(name = "cost", precision = 5, scale = 2) 
   @Min(0)
-  private double cost = 0;
+  @Builder.Default private double cost = 0;
 
   @Column(name = "image_location", length = 200, nullable = false)
   private String imageLocation;
@@ -36,5 +37,11 @@ public class Bouquet {
   @OneToMany
 	@JoinColumn(name = "bouquet_id", referencedColumnName = "id")
   private Collection<ArtifactComponent> artifactComponents;
+  
+  public double getCost() {
+  	return this.getArtifactComponents().stream()
+  			.mapToDouble(ArtifactComponent::getCost)
+  			.sum();
+  }
 
 }

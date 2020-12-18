@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -40,8 +41,8 @@ public class Artifact {
 	@Min(0) @Max(99999)
 	@Builder.Default private int stock = 0;
 	
-	@OneToMany
-	@JoinColumn(name = "artifact_id", referencedColumnName = "id")
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "artifact_id", referencedColumnName = "id", nullable = true)
 	private Collection<ArtifactComponent> artifactComponents;
 
 }

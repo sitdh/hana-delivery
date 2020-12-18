@@ -5,10 +5,13 @@ import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 
@@ -33,15 +36,29 @@ public class Bouquet {
 
   @Column(name = "image_location", length = 200, nullable = false)
   private String imageLocation;
+  
+  @OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "bouquet_id", referencedColumnName = "id", nullable = true)
+  private Collection<Product> product;
 
-  @OneToMany
-	@JoinColumn(name = "bouquet_id", referencedColumnName = "id")
+  @OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "bouquet_id", referencedColumnName = "id", nullable = true)
   private Collection<ArtifactComponent> artifactComponents;
   
   public double getCost() {
   	return this.getArtifactComponents().stream()
   			.mapToDouble(ArtifactComponent::getCost)
   			.sum();
+  }
+  
+  @PrePersist
+  private void prePersistent() {
+  	this.cost = this.getCost();
+  }
+  
+  @PreUpdate
+  private void preUpdate() {
+  	this.cost = this.getCost();
   }
 
 }

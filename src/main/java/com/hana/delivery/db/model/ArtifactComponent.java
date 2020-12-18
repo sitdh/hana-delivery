@@ -4,9 +4,12 @@ import java.math.BigInteger;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 
@@ -31,16 +34,26 @@ public class ArtifactComponent {
   @Min(0)
   @Builder.Default private double cost = 0;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   private Artifact artifact;
 
-  @ManyToOne
-  private Bouquet bouquet;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @Builder.Default private Bouquet bouquet = null;
 
   public double getCost()
   {
     return this.getArtifact().getUnitCost() 
     		* this.getQuality();
+  }
+  
+  @PrePersist
+  private void prePersistent() {
+  	this.cost = this.getCost();
+  }
+  
+  @PreUpdate
+  private void preUpdate() {
+  	this.cost = this.getCost();
   }
 
 } 

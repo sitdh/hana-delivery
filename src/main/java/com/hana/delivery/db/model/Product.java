@@ -5,20 +5,25 @@ import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 import org.hibernate.annotations.Type;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
+@Entity @Builder
 @Table(name = "product")
 public class Product {
 
@@ -40,46 +45,58 @@ public class Product {
   @Column(name = "stock", precision = 5)
   @Min(0)
   @Getter @Setter
-  private int stock = 0;
+  @Builder.Default private int stock = 0;
 
   @Column(name = "remain", precision = 5)
   @Min(0)
   @Getter @Setter
-  private int remain = 0;
+  @Builder.Default private int remain = 0;
 
   @Column(name = "margin_rate", precision = 4, scale = 2)
   @Getter @Setter
-  private double marginRate = 1;
+  @Builder.Default private double marginRate = 1;
 
   @Column(name = "management_cost", precision = 4, scale = 2)
   @Getter @Setter
-  private double managementCost = 1;
+  @Builder.Default private double managementCost = 0;
 
   @Column(name = "discount", precision = 1, scale = 5)
   @Min(0) @Max(1)
   @Getter @Setter
-  private double discount = 1;
+  @Builder.Default private double discount = 0;
 
-  @OneToMany
-  @JoinColumn(name = "product_id", referencedColumnName = "id")
-  private Collection<Bouquet> bouquets;
+  @Getter @Setter
+  @ManyToOne(fetch = FetchType.LAZY)
+  private Bouquet bouquet;
 
-  @OneToMany
-  @JoinColumn(name = "product_id", referencedColumnName = "id")
+  @OneToMany(fetch = FetchType.LAZY)
+  @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = true)
   private Collection<ProductOrderLine> productOrderLines;
   
-  @Column(name = "price", updatable = false, precision = 10, scale = 2)
-  private double price;
+  @Column(name = "price", updatable = false, precision = 5, scale = 2)
+  @Builder.Default private double price = 0;
 
   public double getPrice()
   {
-    return this.bouquets
-    		.stream()
-    		.mapToDouble(Bouquet::getCost)
-    		.sum() 
+    return (this.bouquet.getCost() + this.getManagementCost()) 
     		* this.getMarginRate()
-        * this.getDiscount()
-        * this.getManagementCost();
+        * (1 - this.getDiscount());
+  }
+  
+  @PrePersist
+  private void prePersist() {
+  	this.price = this.getPrice();
+  	if (this.getProductName().length() == 0) {
+  		this.setProductName(this.getBouquet().getName());
+  	}
+  }
+  
+  @PreUpdate
+  private void preUpdate() {
+  	this.price = this.getPrice();
+  	if (this.getProductName().length() == 0) {
+  		this.setProductName(this.getBouquet().getName());
+  	}
   }
 
 }

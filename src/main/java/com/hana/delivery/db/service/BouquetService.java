@@ -23,7 +23,7 @@ public class BouquetService implements EntityService<Bouquet> {
 		return this.bouquetRepository.save(bouquet);
 	}
 
-	@Override
+	@Override @Transactional
 	public Collection<Bouquet> list() {
 		return this.bouquetRepository.findAll();
 	}

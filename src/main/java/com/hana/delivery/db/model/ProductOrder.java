@@ -11,30 +11,30 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.event.spi.PreInsertEvent;
-import org.hibernate.event.spi.PreInsertEventListener;
-import org.hibernate.event.spi.PreUpdateEvent;
-import org.hibernate.event.spi.PreUpdateEventListener;
+import org.apache.commons.lang3.RandomStringUtils;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Tolerate;
 
-@Data
+@Data 
+@Builder
 @Table
 @Entity(name = "product_order")
-public class ProductOrder implements PreUpdateEventListener, PreInsertEventListener {
-
-  /**
-   * 
-   */
-  private static final long serialVersionUID = 7332285558615842772L;
+public class ProductOrder {
 
   @Id
   @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
   private BigInteger id;
+  
+  @Column(name = "order_key", updatable = false)
+  private String orderKey;
 
   @Basic
   @Column(name = "created_at", nullable = false)
@@ -47,29 +47,45 @@ public class ProductOrder implements PreUpdateEventListener, PreInsertEventListe
   private Date updatedAt;
 
   @OneToMany
-  @JoinColumn(name = "product_order_id", referencedColumnName = "id")
+  @JoinColumn(name = "product_order_id", referencedColumnName = "id", nullable = true)
   private Collection<ProductOrderLine> productOrderLine;
 
   @Column(name = "cart_price", nullable = false, updatable = false, precision = 10, scale = 2)
-  protected double cartPrice = 0;
+  @Builder.Default protected double cartPrice = 0;
+  
+  @Column(name = "item_quantity", updatable = false)
+  @Builder.Default protected int itemQuantity = 0;
+  
+  @Tolerate
+  public ProductOrder() {}
 
   public double getCartPrice()
   {
-    return 0;
+    return (this.getProductOrderLine() == null) 
+				? 0.0
+    		: this.productOrderLine.stream().mapToDouble(ProductOrderLine::getPrice).sum() ;
   }
 
-  public boolean onPreInsert(PreInsertEvent event)
+  @PrePersist
+  private void onPreInsert()
   {
-	this.createdAt = new Date();
-	this.updatedAt = new Date();
-	
-    return true;
+  	this.orderKey = RandomStringUtils.random(12, "ABVCDEFGHIJKLMNOPQRSTUVWZ1234567890");
+  	this.cartPrice = this.getCartPrice();
+  	this.itemQuantity = this.getProductOrderLine() == null
+  			? 0
+				: this.getProductOrderLine().size() ;
+		this.createdAt = new Date();
+		this.updatedAt = new Date();
   }
   
-  public boolean onPreUpdate(PreUpdateEvent event)
+  @PreUpdate
+  public void onPreUpdate()
   {
     this.updatedAt = new Date();
-
-    return true;
+  	this.cartPrice = this.getCartPrice();
+  	this.itemQuantity = this.getProductOrderLine() == null
+  			? 0
+				: this.getProductOrderLine().size() ;
+  	this.updatedAt = new Date();
   }
 }

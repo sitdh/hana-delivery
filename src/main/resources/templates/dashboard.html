@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head th:insert="~{layouts/header :: define_header_style}">
+</head>
+<body>
+	<header th:insert="~{layouts/header :: define_header_navigation_bar}"></header>
+
+	<main role="main" class="container cnotainer-fluid">
+		<div class="card-deck" style="margin-top: 20px">
+		  <div class="card">
+			<img class="card-img-top" src="http://localhost:9999/unsafe/348x200/https://image.freepik.com/free-photo/bride-wearing-beautiful-wedding-dress-holding-her-wedding-day-s-bouquet-beautiful-roses_181624-24285.jpg" alt="Card image cap">
+			<div class="card-body">
+			  <h5 class="card-title">จำนวนผู้ใช้งาน</h5>
+
+			  <p class="card-text">
+			  	<h1 th:text="${number_of_customer}"></h1>
+			  </p>
+
+			  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+			</div>
+		  </div>
+
+		  <div class="card">
+			<img class="card-img-top" src="http://localhost:9999/unsafe/348x200/https://images.pexels.com/photos/210990/pexels-photo-210990.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Card image cap">
+			<div class="card-body">
+			  <h5 class="card-title">ยอดขาย</h5>
+
+			  <p class="card-text">
+			  	<h1 th:text="${number_of_order}"></h1>
+			  </p>
+
+			  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+			</div>
+		  </div>
+
+		  <div class="card">
+			<img class="card-img-top" src="http://localhost:9999/unsafe/348x200/https://image.freepik.com/free-photo/bride-posing-stairs-chamber_1153-5945.jpg" alt="Card image cap">
+			<div class="card-body">
+			  <h5 class="card-title">จำนวนสินค้า โดยเฉลี่ย ต่อยอดการสั่งซื้อ</h5>
+			  <p class="card-text">
+				  <p class="card-text">
+					  <h1 th:text="${#numbers.formatDecimal(avg_of_item_in_order, 1, 'DEFAULT', 2, 'DEFAULT')}"></h1>
+				  </p>
+			  </p>
+			  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+			</div>
+		  </div>
+		</div>	
+	  </div>
+	  
+	  <div class="container container-fluid">
+	  	<h2>รายการสินค้าที่มีค่าจัดการสูงสุด</h2>
+	  	<table class="table">
+			<thead>
+				<tr>
+					<th scop="col">Image</th>
+					<th scop="col">name</th>
+					<th scop="col">Management cost</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="product : ${top_management_products}">
+					<td scop="col">
+						<img th:src="'http://localhost:9999/unsafe/100x100/' + ${product.bouquet.imageLocation}" />
+					</td>
+					<td scop="col" th:text="${product.productName}">name</td>
+					<td scop="col" th:text="${product.managementCost}">Management cost</t.>
+				</tr>
+			</tbody>
+		</table>
+	  </div>
+	</main>
+
+	<div th:insert="~{layouts/footer :: footer_content_menu}"></div>
+
+	<div style="display: none;"
+		th:replace="~{layouts/header :: define_header_script}"></div>
+</div>
+</body>
+</html>

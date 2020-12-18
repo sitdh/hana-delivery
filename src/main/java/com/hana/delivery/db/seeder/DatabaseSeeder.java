@@ -3,12 +3,14 @@ package com.hana.delivery.db.seeder;
 import com.hana.delivery.db.model.Artifact;
 import com.hana.delivery.db.model.ArtifactComponent;
 import com.hana.delivery.db.model.Bouquet;
+import com.hana.delivery.db.model.Customer;
 import com.hana.delivery.db.model.Product;
 import com.hana.delivery.db.model.ProductOrder;
 import com.hana.delivery.db.model.ProductOrderLine;
 import com.hana.delivery.db.service.ArtifactComponentService;
 import com.hana.delivery.db.service.ArtifactService;
 import com.hana.delivery.db.service.BouquetService;
+import com.hana.delivery.db.service.CustomerService;
 import com.hana.delivery.db.service.ProductOrderLineService;
 import com.hana.delivery.db.service.ProductOrderService;
 import com.hana.delivery.db.service.ProductService;
@@ -46,17 +48,21 @@ public class DatabaseSeeder {
 
 	@Autowired
 	protected ProductOrderLineService productOrderLineService;
+
+	@Autowired
+	protected CustomerService customerService;
 	
 	protected ArrayList<ProductOrder> productOrders;
 
 	@EventListener
 	public void seed(ContextRefreshedEvent event) {
 		this.productOrders = new ArrayList<ProductOrder>();
+		
+		ArrayList<Customer> customers = customerTableSeeder();
 		ArrayList<Artifact> artifacts = this.artifactTableSeeder();
 		ArrayList<ArrayList<ArtifactComponent>> artifactComponents = this.artifactComponentSeeder(artifacts);
 		ArrayList<Bouquet> bouquets = bouquetTableSeeder(artifactComponents);
 		ArrayList<Product> products = productTableSeeder(bouquets);
-		// ArrayList<ProductOrder> productOrder = productOrderTableSeeder();
 		ArrayList<ProductOrderLine> productOrderLine = productOrderLineTableSeeder(products);
 	}
 
@@ -105,68 +111,68 @@ public class DatabaseSeeder {
 			ArrayList<ArtifactComponent> bq1 = new ArrayList<ArtifactComponent>();
 
 			bq1.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(0)).quality(5).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(0)).quantity(5).build()));
 			bq1.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(4)).quality(5).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(4)).quantity(5).build()));
 
 			bq1.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(5)).quality(1).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(5)).quantity(1).build()));
 
 			bq1.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(6)).quality(3).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(6)).quantity(3).build()));
 
 			bq1.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(8)).quality(1).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(8)).quantity(1).build()));
 
 			bq1.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(7)).quality(1).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(7)).quantity(1).build()));
 
 			artifactComponents.add(bq1);
 
 			ArrayList<ArtifactComponent> bq2 = new ArrayList<ArtifactComponent>();
 			bq2.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(0)).quality(7).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(0)).quantity(7).build()));
 
 			bq2.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(5)).quality(2).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(5)).quantity(2).build()));
 
 			artifactComponents.add(bq2);
 
 			ArrayList<ArtifactComponent> bq3 = new ArrayList<ArtifactComponent>();
 			bq3.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(0)).quality(10).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(0)).quantity(10).build()));
 
 			bq3.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(8)).quality(4).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(8)).quantity(4).build()));
 
 			bq3.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(7)).quality(1).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(7)).quantity(1).build()));
 
 			bq3.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(8)).quality(1).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(8)).quantity(1).build()));
 
 			artifactComponents.add(bq3);
 			ArrayList<ArtifactComponent> bq4 = new ArrayList<ArtifactComponent>();
 
 			bq4.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(0)).quality(15).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(0)).quantity(15).build()));
 			bq4.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(6)).quality(3).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(6)).quantity(3).build()));
 
 			bq4.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(5)).quality(2).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(5)).quantity(2).build()));
 
 			artifactComponents.add(bq4);
 			ArrayList<ArtifactComponent> bq5 = new ArrayList<ArtifactComponent>();
 
 			bq5.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(0)).quality(7).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(0)).quantity(7).build()));
 
 			bq5.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(7)).quality(1).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(7)).quantity(1).build()));
 
 			bq5.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(6)).quality(3).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(6)).quantity(3).build()));
 
 			artifactComponents.add(bq5);
 
@@ -174,161 +180,161 @@ public class DatabaseSeeder {
 
 			ArrayList<ArtifactComponent> bq6 = new ArrayList<ArtifactComponent>();
 			bq6.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(1)).quality(8).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(1)).quantity(8).build()));
 
 			bq6.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(8)).quality(1).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(8)).quantity(1).build()));
 
 			bq6.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(6)).quality(3).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(6)).quantity(3).build()));
 
 			artifactComponents.add(bq6);
 
 			ArrayList<ArtifactComponent> bq7 = new ArrayList<ArtifactComponent>();
 			bq7.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(1)).quality(9).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(1)).quantity(9).build()));
 
 			bq7.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(5)).quality(2).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(5)).quantity(2).build()));
 
 			artifactComponents.add(bq7);
 			ArrayList<ArtifactComponent> bq8 = new ArrayList<ArtifactComponent>();
 			bq8.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(1)).quality(11).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(1)).quantity(11).build()));
 			bq8.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(7)).quality(1).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(7)).quantity(1).build()));
 			bq8.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(5)).quality(9).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(5)).quantity(9).build()));
 
 			artifactComponents.add(bq8);
 			ArrayList<ArtifactComponent> bq9 = new ArrayList<ArtifactComponent>();
 			bq9.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(1)).quality(10).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(1)).quantity(10).build()));
 			bq9.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(8)).quality(1).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(8)).quantity(1).build()));
 			bq9.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(7)).quality(1).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(7)).quantity(1).build()));
 
 			artifactComponents.add(bq9);
 			ArrayList<ArtifactComponent> bq10 = new ArrayList<ArtifactComponent>();
 			bq10.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(1)).quality(8).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(1)).quantity(8).build()));
 			bq10.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(8)).quality(1).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(8)).quantity(1).build()));
 			artifactComponents.add(bq10);
 
 			// ---
 			ArrayList<ArtifactComponent> bq11 = new ArrayList<ArtifactComponent>();
 			bq11.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(2)).quality(9).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(2)).quantity(9).build()));
 			bq11.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(7)).quality(1).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(7)).quantity(1).build()));
 			artifactComponents.add(bq11);
 
 			ArrayList<ArtifactComponent> bq12 = new ArrayList<ArtifactComponent>();
 			bq12.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(2)).quality(10).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(2)).quantity(10).build()));
 
 			bq12.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(5)).quality(1).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(5)).quantity(1).build()));
 			artifactComponents.add(bq12);
 
 			ArrayList<ArtifactComponent> bq13 = new ArrayList<ArtifactComponent>();
 			bq13.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(2)).quality(5).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(2)).quantity(5).build()));
 
 			bq13.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(7)).quality(1).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(7)).quantity(1).build()));
 
 			bq13.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(6)).quality(2).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(6)).quantity(2).build()));
 
 			bq13.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(8)).quality(1).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(8)).quantity(1).build()));
 
 			bq13.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(5)).quality(5).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(5)).quantity(5).build()));
 			artifactComponents.add(bq13);
 
 			ArrayList<ArtifactComponent> bq14 = new ArrayList<ArtifactComponent>();
 			bq14.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(2)).quality(9).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(2)).quantity(9).build()));
 
 			bq14.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(8)).quality(1).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(8)).quantity(1).build()));
 
 			bq14.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(5)).quality(2).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(5)).quantity(2).build()));
 			artifactComponents.add(bq14);
 
 			ArrayList<ArtifactComponent> bq15 = new ArrayList<ArtifactComponent>();
 			bq15.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(2)).quality(5).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(2)).quantity(5).build()));
 
 			bq15.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(7)).quality(1).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(7)).quantity(1).build()));
 
 			bq15.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(6)).quality(1).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(6)).quantity(1).build()));
 			artifactComponents.add(bq15);
 			// ---
 
 			ArrayList<ArtifactComponent> bq16 = new ArrayList<ArtifactComponent>();
 			bq16.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(3)).quality(2).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(3)).quantity(2).build()));
 
 			bq16.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(7)).quality(1).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(7)).quantity(1).build()));
 			artifactComponents.add(bq16);
 			// ---
 
 			ArrayList<ArtifactComponent> bq17 = new ArrayList<ArtifactComponent>();
 			bq17.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(3)).quality(20).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(3)).quantity(20).build()));
 			artifactComponents.add(bq17);
 
 			ArrayList<ArtifactComponent> bq18 = new ArrayList<ArtifactComponent>();
 			bq18.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(3)).quality(10).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(3)).quantity(10).build()));
 
 			bq18.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(7)).quality(7).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(7)).quantity(7).build()));
 			artifactComponents.add(bq18);
 
 			ArrayList<ArtifactComponent> bq19 = new ArrayList<ArtifactComponent>();
 			bq19.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(3)).quality(2).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(3)).quantity(2).build()));
 
 			bq19.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(8)).quality(1).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(8)).quantity(1).build()));
 
 			bq19.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(6)).quality(1).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(6)).quantity(1).build()));
 			artifactComponents.add(bq19);
 
 			ArrayList<ArtifactComponent> bq20 = new ArrayList<ArtifactComponent>();
 			bq20.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(3)).quality(5).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(3)).quantity(5).build()));
 
 			bq20.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(7)).quality(1).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(7)).quantity(1).build()));
 			artifactComponents.add(bq20);
 
 			// ---
 
 			ArrayList<ArtifactComponent> bq21 = new ArrayList<ArtifactComponent>();
 			bq21.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(4)).quality(1).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(4)).quantity(1).build()));
 			artifactComponents.add(bq21);
 
 			ArrayList<ArtifactComponent> bq22 = new ArrayList<ArtifactComponent>();
 			bq22.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(4)).quality(5).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(4)).quantity(5).build()));
 			artifactComponents.add(bq22);
 
 			ArrayList<ArtifactComponent> bq23 = new ArrayList<ArtifactComponent>();
 			bq23.add(this.artifactComponentService
-					.insert(ArtifactComponent.builder().artifact(artifacts.get(4)).quality(10).build()));
+					.insert(ArtifactComponent.builder().artifact(artifacts.get(4)).quantity(10).build()));
 			artifactComponents.add(bq23);
 
 		}
@@ -593,4 +599,35 @@ public class DatabaseSeeder {
 		return orderLine;
 	}
 	
+	public ArrayList<Customer> customerTableSeeder() {
+		ArrayList<Customer> customers = new ArrayList<Customer>();
+		List<String> names = Arrays.asList(
+				"Bhakdi Ponhpaiboon",
+				"Nattasut Lui",
+				"Konthee Suramongkol",
+				"Loesan Nitpattanasai",
+				"Taweerat Inchareon",
+				"Kantsak Chaipoowapat",
+				"Kiettisuk Plainukool",
+				"Prid Dabaransi",
+				"Kraiwin Sansurin",
+				"Ramkamhaeng Sanya"
+				);
+		List<String> sexuals = Arrays.asList("men", "women");
+		String urlFormat = "https://randomuser.me/api/portraits";
+
+		for (String name : names) {
+			int picture_id = ThreadLocalRandom.current().nextInt(20, 70);
+			String sex = sexuals.get(ThreadLocalRandom.current().nextInt(0, 2));
+			String url = urlFormat + "/" + sex + "/" + String.valueOf(picture_id) + ".jpg";
+
+			customers.add(this.customerService
+					.insert(Customer.builder()
+							.name(name)
+							.profileLocation(url)
+							.build()));
+		}
+
+		return customers;
+	}
 }

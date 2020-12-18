@@ -17,6 +17,7 @@ import javax.validation.constraints.Min;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Tolerate;
 
 @Data @Builder
 @Table
@@ -44,6 +45,9 @@ public class Bouquet {
   @OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "bouquet_id", referencedColumnName = "id", nullable = true)
   private Collection<ArtifactComponent> artifactComponents;
+  
+  @Tolerate
+  public Bouquet() {}
   
   public double getCost() {
   	return this.getArtifactComponents().stream()

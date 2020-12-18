@@ -22,6 +22,7 @@ import org.hibernate.annotations.Type;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Tolerate;
 
 @Entity @Builder
 @Table(name = "product")
@@ -75,6 +76,9 @@ public class Product {
   
   @Column(name = "price", updatable = false, precision = 5, scale = 2)
   @Builder.Default private double price = 0;
+  
+  @Tolerate
+  public Product() {}
 
   public double getPrice()
   {

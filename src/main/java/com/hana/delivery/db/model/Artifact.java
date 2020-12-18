@@ -16,6 +16,7 @@ import javax.validation.constraints.Min;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Tolerate;
 
 @Builder @Data
 @Entity
@@ -44,5 +45,8 @@ public class Artifact {
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "artifact_id", referencedColumnName = "id", nullable = true)
 	private Collection<ArtifactComponent> artifactComponents;
+	
+	@Tolerate
+	public Artifact() {}
 
 }

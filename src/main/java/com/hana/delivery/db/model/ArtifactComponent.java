@@ -15,6 +15,7 @@ import javax.validation.constraints.Min;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Tolerate;
 
 @Data @Builder
 @Table
@@ -26,9 +27,9 @@ public class ArtifactComponent {
   @Column(name = "id")
   private BigInteger id;
 
-  @Column(name = "quality")
+  @Column(name = "quantity")
   @Min(1)
-  @Builder.Default private int quality = 1;
+  @Builder.Default private int quantity = 1;
 
   @Column(name = "cost", updatable = false, precision = 10, scale = 2)
   @Min(0)
@@ -39,11 +40,14 @@ public class ArtifactComponent {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @Builder.Default private Bouquet bouquet = null;
+  
+  @Tolerate
+  public ArtifactComponent() {}
 
   public double getCost()
   {
     return this.getArtifact().getUnitCost() 
-    		* this.getQuality();
+    		* this.getQuantity();
   }
   
   @PrePersist

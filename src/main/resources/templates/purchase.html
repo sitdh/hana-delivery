@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head th:insert="~{layouts/header :: define_header_style}">
+</head>
+<body>
+	<header th:insert="~{layouts/header :: define_header_navigation_bar}"></header>
+
+	<main role="main">
+		<form action="/checkout" method="POST">
+		<table class="table">
+			<thead>
+				<tr>
+					<th scop="col">Image</th>
+					<th scop="col">name</th>
+					<th scop="col">Quantity</th>
+					<th scop="col">Unit Price</th>
+					<th scop="col">Price</th>
+				</tr>
+			</thead>
+			<tbody th:if="${#lists.isEmpty(products)}">
+				<tr>
+					<th colspan="5">
+						ไม่พบสินค้า
+					</th>
+				</tr>	
+			</tbody>
+			<tbody th:unless="${#lists.isEmpty(products)}">
+				<tr th:each="product : ${products}">
+					<th scop="col">
+						<img th:src="'http://localhost:9999/unsafe/150x150/' + ${product.bouquet.imageLocation}" 
+							th:alt="${product.productName}"
+							th:title="${product.productName}" />
+					</th>
+					<th th:text="${product.productName}">
+					</th>
+					<th scop="col">
+						<input type="nidden" th:value="${product.id}"
+							th:name="'checkout[quantity][' + ${product.id} + ']'"/>
+						<input type="number" value="1" 
+							disabled="disabled"
+							th:name="'checkout[quantity][' + ${product.id} + ']'"/>
+					</th>
+					<th scop="col">
+						<input type="number" 
+							disabled="disabled"
+							th:value="${#numbers.formatDecimal(product.price, 1, 'DEFAULT', 2, 'DEFAULT')}" 
+							th:name="'checkout[unit_price][' + ${product.id} + ']'" />
+					</th>
+					<th scop="col">
+						<nput type="number" 
+							disabled="disabled"
+							th:value="${#numbers.formatDecimal(product.price, 1, 'DEFAULT', 2, 'DEFAULT')}" name="total" 
+							/>
+					</th>
+				</tr>
+				<tr>
+					<th scop="col" colspan="3">
+						ผู้ซื้อ: 
+						<select name="checkout_user">
+							<option th:each="customer : ${customers}" th:value="${customer.id}" th:text="${customer.name}"></option>
+						</select>
+					</th>
+					<th scop="col">
+						รวม
+					</th>
+					<th scop="col">
+						<b th:text="${#numbers.formatDecimal(totalPrice, 1, 'DEFAULT', 2, 'DEFAULT')}"></b>
+						บาท
+					</th>
+				</tr>
+				<tr>
+					<th scop="col" colspan="4">
+					&nbsp;
+					</th>
+					<th scop="col">
+						<button type="submit" class="btn btn-primary">
+							สั่งซื้อสินค้า	
+						</button>
+					</th>
+				</tr>
+			</tbody>
+		</table>
+		</form>
+	</main>
+
+	<div th:insert="~{layouts/footer :: footer_content_menu}"></div>
+
+	<div style="display: none;"
+		th:replace="~{layouts/header :: define_header_script}"></div>
+</div>
+</body>
+</html>

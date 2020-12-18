@@ -10,7 +10,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -55,6 +57,12 @@ public class ProductOrder {
   
   @Column(name = "item_quantity", updatable = false)
   @Builder.Default protected int itemQuantity = 0;
+  
+  @ManyToOne
+  private PaymentInformation paymentInformation;
+  
+  @OneToOne(mappedBy = "productOrder")
+  private OrderDelivery orderDelivery;
   
   @Tolerate
   public ProductOrder() {}

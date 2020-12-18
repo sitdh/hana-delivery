@@ -19,11 +19,23 @@
               </p>
             </div>
             <div class="col-sm4 offset-md-1 py-4">
-              <h4 class="text-white">Contact</h4>
+              <h4 class="text-white">Hot links</h4>
               <ul class="list-unstyled text-muted">
-                <li>Hello</li>
-                <li>World</li>
-                <li>HTML</li>
+                <li>
+                	<a th:href="@{/}">
+                		Home
+                	</a>
+				</li>
+                <li>
+                	<a th:href="@{/purchase}">
+                		Purchase
+                	</a>
+				</li>
+                <li>
+                	<a th:href="@{/dashboard}">
+                		Dashboard
+                	</a>
+				</li>
               </ul>
             </div>
           </div>
@@ -35,6 +47,12 @@
             <img src="content/img/lotus.svg" alt="Lotus" style="max-height: 40px; margin: auto 10px auto 0;">
             <strong>Hana Delivery</strong>
           </a>
+
+          <div class="d-flex">
+		  <a th:if="${ count }" class="btn btn-primary" href="/purchase" role="button" th:text="'มีสินค้า ' + ${ count } + ' รายการ '"></a>
+		  <a th:unless="${ count }" class="btn btn-primary" href="#" role="button" th:text="'ไม่พบรายการสินค้า'"></a>
+          </div>
+
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
